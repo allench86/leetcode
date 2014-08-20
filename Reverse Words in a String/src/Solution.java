@@ -1,41 +1,41 @@
 public class Solution {
-	public String reverseWords(String s) {
-		String result = reverseString(s, 0, s.length() - 1);
-		int startIndex = 0;
-		int endIndex = result.indexOf(' ', startIndex);
-		while (endIndex != -1) {
-			result = reverseString(result, startIndex, endIndex - 1);
-			startIndex = endIndex + 1;
-			endIndex = result.indexOf(' ', startIndex);
-		}
-		result = reverseString(result, startIndex, result.length() - 1);
-		return result;
-	}
+    public String reverseWords(String s) {
+        String[] wordsArray = s.split(" ");
+        reverseArrayInspace(wordsArray);
+        return joinStringArray(wordsArray);
+    }
 
-	public String reverseString(String s, int startIndex, int endIndex) {
-		if (s == null || s.isEmpty()) {
-			return "";
-		}
-		if (startIndex > endIndex || startIndex < 0 || endIndex < 0) {
-			return s;
-		}
-		char temp = 0;
-		char[] temp_s = s.toCharArray();
-		while (startIndex < endIndex) {
-			temp = temp_s[startIndex];
-			temp_s[startIndex] = temp_s[endIndex];
-			temp_s[endIndex] = temp;
-			startIndex++;
-			endIndex--;
-		}
-		return String.copyValueOf(temp_s);
-	}
+    public void reverseArrayInspace(String[] original) {
+        if (original == null) {
+            return;
+        }
+        for (int i = 0; i < original.length / 2; i++) {
+            String temp = original[i];
+            original[i] = original[original.length - i - 1];
+            original[original.length - i - 1] = temp;
+        }
+    }
 
-	public static void main(String[] args) {
-		Solution solution = new Solution();
-		String test = "abc   def";
-		System.out.println("\""
-				+ solution.reverseString(test, 0, test.length() - 1) + "\"");
-		System.out.println("\"" + solution.reverseWords(test) + "\"");
-	}
+    public String joinStringArray(String[] stringArray) {
+        if (stringArray == null || stringArray.length == 0) {
+            return "";
+        }
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < stringArray.length; i++) {
+            if (!stringArray[i].isEmpty()) {
+                result.append(stringArray[i] + " ");
+            }
+        }
+        if (result.length() > 0) {
+            result.deleteCharAt(result.length()-1);
+        }
+        
+        return result.toString();
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        String test = "   aewrwa    ";
+        System.out.println("\"" + solution.reverseWords(test) + "\"");
+    }
 }
