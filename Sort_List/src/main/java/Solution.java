@@ -1,13 +1,14 @@
 public class Solution {
     /**
-     * Create an array, elements in the array are references to the node in the list. Do a quick sort on that array.
-     * Then re-organize the list.
+     * Using merge sort. Average and worst cases are all O(n log n) time.
      */
 
     public static void main(String[] args) {
-        ListNode n1 = new ListNode(2);
-        ListNode n2 = new ListNode(1);
+        ListNode n1 = new ListNode(3);
+        ListNode n2 = new ListNode(2);
+        ListNode n3 = new ListNode(1);
         n1.next = n2;
+        n2.next = n3;
         Solution s = new Solution();
         ListNode newHead = s.sortList(n1);
         while (newHead != null) {
@@ -18,68 +19,68 @@ public class Solution {
     }
 
     public ListNode sortList(ListNode head) {
-        if (head == null) {
-            return null;
+        if (head == null || head.next == null) {
+            return head;
         }
+        int length = getLengthOfList(head);
+        return mergeSort(head, length);
+    }
 
-        if (head.next == null) {
+    public ListNode mergeSort(ListNode head, int length) {
+        if (length == 1) {
+            head.next = null;
             return head;
         }
 
-        ListNode newHead = null;
-        int length = getLengthOfList(head);
+        ListNode halfListHead = breakToHalf(head, length);
 
-        ListNode[] sortedList = new ListNode[length];
+        ListNode list1 = mergeSort(head, length / 2);
+        ListNode list2 = mergeSort(halfListHead, length - length / 2);
 
-        int i = 0;
-        ListNode p = head;
-        while (p != null) {
-            sortedList[i++] = p;
-            p = p.next;
-        }
-
-        quickSort(sortedList, 0, sortedList.length - 1);
-
-        i = 0;
-        while (i < sortedList.length - 1) {
-            p = sortedList[i];
-            p.next = sortedList[i + 1];
-            i++;
-        }
-        sortedList[sortedList.length - 1].next = null;
-        newHead = sortedList[0];
-
-        return newHead;
+        return merge(list1, length / 2, list2, length - length / 2);
     }
 
-    public void quickSort(ListNode[] list, int l, int h) {
-        if (l < h && l >= 0 && h < list.length) {
-            int flagIndex = oneRunQuickSort(list, l, h);
-            quickSort(list, l, flagIndex - 1);
-            quickSort(list, flagIndex + 1, h);
+    private ListNode breakToHalf(ListNode head, int length) {
+        int halfLength = length / 2;
+        while (halfLength > 1) {
+            head = head.next;
+            halfLength--;
         }
+        ListNode next = head.next;
+        head.next = null;
+        head = next;
+        return head;
     }
 
-    private int oneRunQuickSort(ListNode[] list, int l, int h) {
-        ListNode flag = list[l];
-        while (l < h) {
-            while (l < h && list[h].val > flag.val) {
-                h--;
+    public ListNode merge(ListNode list1, int length1, ListNode list2, int length2) {
+        ListNode head = new ListNode(-1);
+        ListNode end = head;
+        while (length1 > 0 && length2 > 0) {
+            if (list1.val <= list2.val) {
+                end.next = list1;
+                list1 = list1.next;
+                length1--;
             }
-            if (l != h) {
-                list[l] = list[h];
-                l++;
+            else {
+                end.next = list2;
+                list2 = list2.next;
+                length2--;
             }
-            while (l < h && list[l].val < flag.val) {
-                l++;
-            }
-            if (l != h) {
-                list[h] = list[l];
-                h--;
-            }
+            end = end.next;
         }
-        list[l] = flag;
-        return l;
+
+        while (list1 != null) {
+            end.next = list1;
+            list1 = list1.next;
+            end = end.next;
+        }
+        while (list2 != null) {
+            end.next = list2;
+            list2 = list2.next;
+            end = end.next;
+        }
+
+        return head.next;
     }
 
     private int getLengthOfList(ListNode head) {
