@@ -3,7 +3,7 @@ import java.util.Set;
 
 public class Solution {
     public boolean wordBreak(String s, Set<String> dict) {
-        if (s == null || dict == null) {
+        if (s == null || s.length() == 0 || dict == null) {
             return false;
         }
         LinkedList<Integer> starts = new LinkedList<Integer>();
