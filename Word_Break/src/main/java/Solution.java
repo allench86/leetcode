@@ -1,7 +1,31 @@
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
 public class Solution {
+    public static void main(String[] args) {
+        String s =
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        String[] input = { "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa",
+                "aaaaaaaaaa" };
+        // String s = "aaaaaaab";
+        // String[] input = { "a", "aa", "aaa" };
+        // String s = "catsanddog";
+        // String[] input = { "cat", "cats", "and", "sand", "dogs" };
+        Set<String> dict = buildDict(input);
+
+        Solution solution = new Solution();
+        System.out.println(solution.wordBreak(s, dict));
+    }
+
+    public static Set<String> buildDict(String[] input) {
+        Set<String> dict = new HashSet<String>();
+        for (String s : input) {
+            dict.add(s);
+        }
+        return dict;
+    }
+
     public boolean wordBreak(String s, Set<String> dict) {
         if (s == null || s.length() == 0 || dict == null) {
             return false;
