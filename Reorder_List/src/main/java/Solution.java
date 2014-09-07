@@ -31,35 +31,50 @@ public class Solution {
         if (head == null || head.next == null) {
             return;
         }
-        ListNode tempHead = head;
-        ListNode newEnd = head;
-        while (newEnd != null && newEnd.next != null) {
-            newEnd = newEnd.next;
+
+        ListNode fast = head;
+        ListNode slow = head;
+
+        // split to two lists
+        while (true) {
+            fast = fast.next;
+            if (fast == null) {
+                break;
+            }
+            fast = fast.next;
+            if (fast == null) {
+                break;
+            }
+            slow = slow.next;
         }
 
-        while (tempHead.next != null) {
-            newEnd = reverseList(tempHead, tempHead.next, newEnd);
-            tempHead = tempHead.next;
+        reverseList(slow, slow.next);
+        ListNode halfHead = slow.next;
+        slow.next = null;
+        mergeLists(head, halfHead);
+
+    }
+
+    private void mergeLists(ListNode head, ListNode secondHead) {
+        ListNode p = head, q = secondHead;
+        ListNode t = null;
+        while (q != null) {
+            t = q.next;
+            q.next = p.next;
+            p.next = q;
+            p = q.next;
+            q = t;
         }
     }
 
-    public ListNode reverseList(ListNode head, ListNode startNode, ListNode end) {
-        ListNode newEnd = startNode;
-
-        head.next = end;
-        end.next = startNode;
-
-        while (startNode.next != end) {
-            ListNode temp = startNode.next;
-            startNode.next = end.next;
-            end.next = startNode;
-            startNode = temp;
+    public void reverseList(ListNode pre, ListNode start) {
+        ListNode t = null;
+        while (start.next != null) {
+            t = pre.next;
+            pre.next = start.next;
+            start.next = start.next.next;
+            pre.next.next = t;
         }
-
-        startNode.next = end.next;
-        end.next = startNode;
-        newEnd.next = null;
-
-        return newEnd;
     }
+
 }
