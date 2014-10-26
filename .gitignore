@@ -17,3 +17,9 @@ target/
 *.tmproj
 *~
 *.swp
+
+SeleniumTest/src/main/java/Solution.java
+
+SeleniumTest/pom.xml
+
+SeleniumTest/src/test/java/SeleniumTest.java
