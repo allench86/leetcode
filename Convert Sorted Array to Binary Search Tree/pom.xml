@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ibm.biginsights</groupId>
+  <artifactId>Convert_Sorted_Array_to_Binary_Search_Tree</artifactId>
+  <version>2.1-SNAPSHOT</version>
+
+  <name>Convert Sorted Array to Binary Search Tree</name>
+  <description>Given an array where elements are sorted in ascending order, convert it to a height balanced BST.</description>
+  <packaging>war</packaging>
+
+  <parent>
+    <groupId>com.ibm.biginsights</groupId>
+    <artifactId>java-parent</artifactId>
+    <version>1.3.4</version>
+  </parent>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <targetJdk>1.7</targetJdk>
+  </properties>
+
+  <dependencies>
+      <!-- Unit Test Related Dependencies -->
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-core</artifactId>
+        <version>1.3</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.unitils</groupId>
+        <artifactId>unitils-core</artifactId>
+        <version>3.1</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <version>1.9.0</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
