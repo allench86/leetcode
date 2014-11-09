@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Stack;
 
 public class Solution {
@@ -29,29 +27,18 @@ public class Solution {
             return results;
         }
 
-        Set<TreeNode> visitedNode = new HashSet<TreeNode>();
         Stack<TreeNode> s = new Stack<TreeNode>();
-        s.push(root);
+        TreeNode currentNode = root;
 
-        while (!s.isEmpty()) {
-            TreeNode currentNode = s.pop();
-            if (visitedNode.contains(currentNode)) {
-                results.add(currentNode.val);
-                continue;
-            }
-            if (currentNode.left != null) {
-                if (currentNode.right != null) {
-                    s.push(currentNode.right);
-                }
-                visitedNode.add(currentNode);
+        while (!s.isEmpty() || currentNode != null) {
+            if (currentNode != null) {
                 s.push(currentNode);
-                s.push(currentNode.left);
+                currentNode = currentNode.left;
             }
             else {
-                results.add(currentNode.val);
-                if (currentNode.right != null) {
-                    s.push(currentNode.right);
-                }
+                TreeNode t = s.pop();
+                results.add(t.val);
+                currentNode = t.right;
             }
         }
 
