@@ -24,14 +24,4 @@ SeleniumTest/pom.xml
 
 SeleniumTest/src/test/java/SeleniumTest.java
 
-Balanced Binary Tree/src/main/webapp/WEB-INF/ibm-web-ext.xml
-
-Best Time to Buy and Sell Stock II/src/main/webapp/WEB-INF/ibm-web-ext.xml
-
-Binary Tree Inorder Traversal/src/main/webapp/WEB-INF/ibm-web-ext.xml
-
-Candy/src/main/webapp/WEB-INF/ibm-web-ext.xml
-
-Climbing Stairs/src/main/webapp/WEB-INF/ibm-web-ext.xml
-
-*.xml
+webapp/
