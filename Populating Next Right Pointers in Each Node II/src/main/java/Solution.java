@@ -59,7 +59,21 @@ public class Solution {
                 currentParent = headOfCurrentLavel.right;
             }
             else {
-                currentParent = null;
+                TreeLinkNode next = headOfCurrentLavel.next;
+                while (next != null) {
+                    if (next.left != null) {
+                        currentParent = next.left;
+                        break;
+                    }
+                    else if (next.right != null) {
+                        currentParent = next.right;
+                        break;
+                    }
+                    else {
+                        currentParent = null;
+                        next = next.next;
+                    }
+                }
             }
             headOfCurrentLavel = currentParent;
         }
