@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 public class Solution {
     public static void main(String[] args) {
 
@@ -7,29 +5,24 @@ public class Solution {
     }
 
     public int majorityElement(int[] num) {
-        HashMap<Integer, Integer> countMap = new HashMap<Integer, Integer>();
-
-        if (num != null) {
-            if (num.length == 1) {
-                return num[0];
-            }
-            for (int i : num) {
-                if (countMap.containsKey(i)) {
-                    int count = countMap.get(i);
-                    count++;
-                    if (count > num.length / 2) {
-                        return i;
-                    }
-                    else {
-                        countMap.put(i, count);
-                    }
+        int current = 0;
+        int counter = 0;
+        if (num != null && num.length > 0) {
+            for (int i = 0; i < num.length; i++) {
+                if (counter == 0) {
+                    current = num[i];
+                    counter = 1;
                 }
                 else {
-                    countMap.put(i, 1);
+                    if (current == num[i]) {
+                        counter++;
+                    }
+                    else {
+                        counter--;
+                    }
                 }
             }
         }
-
-        return 0;
+        return current;
     }
 }
