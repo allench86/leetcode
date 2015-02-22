@@ -1,11 +1,4 @@
 public class Solution {
-    public static void main(String[] args) {
-        int[] n = { 1, 3, 1, 1, 1 };
-
-        Solution s = new Solution();
-        System.out.println(s.search(n, 3));
-    }
-
     public int search(int[] A, int target) {
         int index = -1;
         if (A != null && A.length > 0) {
