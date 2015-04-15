@@ -1,53 +1,45 @@
+import java.util.HashMap;
+import java.util.Set;
+
 public class TwoSum {
-    int currentLength;
-    int[] buffer;
-    int defaultLength = 20;
+    HashMap<Integer, Integer> store;
 
     public TwoSum() {
-        currentLength = 0;
-        buffer = new int[defaultLength];
+        store = new HashMap<Integer, Integer>();
     }
 
     public void add(int number) {
-        if (currentLength == 0) {
-            buffer[0] = number;
-            currentLength++;
-            return;
+        if (store.containsKey(number)) {
+            int value = store.get(number);
+            value++;
+            store.put(number, value);
         }
-
-        int[] newBuffer = buffer;
-        if (currentLength == buffer.length) {
-            newBuffer = new int[buffer.length * 2];
+        else {
+            store.put(number, 1);
         }
-
-        int i = currentLength - 1;
-        for (; i >= 0 && buffer[i] > number; i--) {
-            newBuffer[i + 1] = buffer[i];
-        }
-
-        newBuffer[i + 1] = number;
-        if (newBuffer != buffer) {
-            for (; i >= 0; i--) {
-                newBuffer[i] = buffer[i];
-            }
-        }
-        buffer = newBuffer;
-        currentLength++;
     }
 
     public boolean find(int value) {
-        int l = 0;
-        int r = currentLength - 1;
+        Set<Integer> keySet = store.keySet();
 
-        while (l < r) {
-            if (buffer[l] + buffer[r] < value) {
-                l++;
-            }
-            else if (buffer[l] + buffer[r] > value) {
-                r--;
+        for (Integer key : keySet) {
+            int t = value - key;
+            int v = store.get(key);
+            if (v > 1) {
+                if (t == key) {
+                    return true;
+                }
+                else if (store.containsKey(t)) {
+                    return true;
+                }
             }
             else {
-                return true;
+                if (t == key) {
+                    return false;
+                }
+                else if (store.containsKey(t)) {
+                    return true;
+                }
             }
         }
         return false;
