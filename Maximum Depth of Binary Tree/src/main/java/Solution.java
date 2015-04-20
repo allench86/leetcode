@@ -1,5 +1,3 @@
-import java.util.Stack;
-
 public class Solution {
     public static void main(String[] args) {
         Solution s = new Solution();
@@ -19,33 +17,27 @@ public class Solution {
         System.out.println(s.maxDepth(n1));
     }
 
+    int maxDepth = 0;
+    int depth = 0;
+
     public int maxDepth(TreeNode root) {
-        int maxDepth = 0;
-        if (root == null) {
-            return maxDepth;
-        }
-
-        Stack<TreeNode> currentLevel = new Stack<TreeNode>();
-        Stack<TreeNode> nextLevel = new Stack<TreeNode>();
-
-        currentLevel.push(root);
-        while (!currentLevel.isEmpty()) {
-            Stack<TreeNode> temp = currentLevel;
-            while (!currentLevel.isEmpty()) {
-                TreeNode currentNode = currentLevel.pop();
-                if (currentNode.left != null) {
-                    nextLevel.push(currentNode.left);
-                }
-                if (currentNode.right != null) {
-                    nextLevel.push(currentNode.right);
-                }
-            }
-            maxDepth++;
-            currentLevel = nextLevel;
-            nextLevel = temp;
-        }
-
+        depth(root);
         return maxDepth;
+    }
+
+    private void depth(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        else {
+            depth++;
+            if (depth > maxDepth) {
+                maxDepth = depth;
+            }
+            depth(root.left);
+            depth(root.right);
+            depth--;
+        }
     }
 
     /**
