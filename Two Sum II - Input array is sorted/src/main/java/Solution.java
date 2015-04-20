@@ -16,41 +16,25 @@ public class Solution {
 
     public int[] twoSum(int[] numbers, int target) {
         int[] indice = null;
-
-        int i = 0, h = 0, l = 0;
-        int temp = 0, secondIndex = 0;
-
-        while (i < numbers.length && numbers[i] <= target && target - numbers[i] >= numbers[i]) {
-            temp = target - numbers[i];
-            l = i + 1;
-            h = numbers.length - 1;
-            secondIndex = binarySearch(numbers, h, l, temp);
-            if (secondIndex != -1) {
-                indice = new int[2];
-                indice[0] = i + 1;
-                indice[1] = secondIndex + 1;
-                break;
+        if (numbers != null && numbers.length > 0) {
+            int r = 0;
+            int l = numbers.length - 1;
+            while (r < l) {
+                if (numbers[r] + numbers[l] == target) {
+                    indice = new int[2];
+                    indice[0] = r + 1;
+                    indice[1] = l + 1;
+                    break;
+                }
+                else if (numbers[r] + numbers[l] < target) {
+                    r++;
+                }
+                else {
+                    l--;
+                }
             }
-            i++;
         }
-
         return indice;
     }
 
-    public int binarySearch(int[] numbers, int h, int l, int target) {
-        int m = 0;
-        while (l < numbers.length && h < numbers.length && l <= h) {
-            m = (h + l) / 2;
-            if (numbers[m] == target) {
-                return m;
-            }
-            else if (numbers[m] < target) {
-                l = m + 1;
-            }
-            else if (numbers[m] > target) {
-                h = m - 1;
-            }
-        }
-        return -1;
-    }
 }
