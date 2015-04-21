@@ -9,8 +9,8 @@ public class Solution {
         int num = 0;
         int t = n;
         while (t != 0) {
-            num += t & 0x0001;
-            t = t >>> 1;
+            t = t & (t - 1);
+            num++;
         }
         return num;
     }
