@@ -12,9 +12,8 @@ public class Solution {
             while (shift < 32) {
                 int lastDigitSum = 0;
                 for (int i = 0; i < A.length; i++) {
-                    int temp = A[i];
-                    temp = temp >>> shift;
-                    lastDigitSum += temp % 2;
+                    lastDigitSum += A[i] % 2;
+                    A[i] = A[i] >>> 1;
                 }
                 int currentDigitInResult = lastDigitSum % 3;
                 currentDigitInResult = currentDigitInResult << shift;
