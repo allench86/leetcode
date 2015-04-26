@@ -1,4 +1,9 @@
 public class Solution {
+    public static void main(String[] args) {
+        Solution s = new Solution();
+        System.out.println(s.titleToNumber("EB"));
+    }
+
     public int titleToNumber(String s) {
         int result = 0;
         if (s != null) {
