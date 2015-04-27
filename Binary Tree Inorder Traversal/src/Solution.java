@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class Solution {
     public static void main(String[] args) {
@@ -27,22 +26,19 @@ public class Solution {
             return results;
         }
 
-        Stack<TreeNode> s = new Stack<TreeNode>();
-        TreeNode currentNode = root;
-
-        while (!s.isEmpty() || currentNode != null) {
-            if (currentNode != null) {
-                s.push(currentNode);
-                currentNode = currentNode.left;
-            }
-            else {
-                TreeNode t = s.pop();
-                results.add(t.val);
-                currentNode = t.right;
-            }
-        }
+        traversal(root, results);
 
         return results;
+    }
+
+    private void traversal(TreeNode root, List<Integer> results) {
+        if (root == null) {
+            return;
+        }
+
+        traversal(root.left, results);
+        results.add(root.val);
+        traversal(root.right, results);
     }
 
     public class TreeNode {
