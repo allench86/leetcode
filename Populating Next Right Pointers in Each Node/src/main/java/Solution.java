@@ -4,28 +4,29 @@ public class Solution {
         if (root == null) {
             return;
         }
+        connectToRight(root, null);
+    }
 
-        root.next = null;
-
-        TreeLinkNode headOfCurrentLavel = root;
-        TreeLinkNode currentParent = root;
-
-        while (headOfCurrentLavel != null) {
-            while (currentParent != null) {
-                if (currentParent.left != null && currentParent.right != null) {
-                    currentParent.left.next = currentParent.right;
-                }
-                if (currentParent.next == null && currentParent.right != null) {
-                    currentParent.right.next = null;
-                }
-                else if (currentParent.next != null && currentParent.right != null) {
-                    currentParent.right.next = currentParent.next.left;
-                }
-                currentParent = currentParent.next;
-            }
-            currentParent = headOfCurrentLavel.left;
-            headOfCurrentLavel = currentParent;
+    private void connectToRight(TreeLinkNode curr, TreeLinkNode currRightSibling) {
+        if (curr == null) {
+            return;
         }
+
+        curr.next = currRightSibling;
+
+        if (curr.left != null) {
+            curr.left.next = curr.right;
+        }
+
+        connectToRight(curr.left, curr.right);
+
+        TreeLinkNode rightChildSibling = null;
+        if (currRightSibling != null) {
+            rightChildSibling = currRightSibling.left;
+        }
+
+        connectToRight(curr.right, rightChildSibling);
+
     }
 
     public static class TreeLinkNode {
