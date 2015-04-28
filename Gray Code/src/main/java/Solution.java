@@ -13,7 +13,7 @@ public class Solution {
     }
 
     public List<Integer> grayCode(int n) {
-        ArrayList<Integer> results = new ArrayList<Integer>();
+        List<Integer> results = new ArrayList<Integer>();
         if (n < 0) {
             return results;
         }
@@ -21,30 +21,25 @@ public class Solution {
             results.add(0);
         }
         else {
-            ArrayList<Integer> preResults = new ArrayList<Integer>();
-            preResults.add(0);
-            preResults.add(1);
-
-            int i = 1;
-            while (i < n) {
-                // add '0'
-                for (int j = 0; j < preResults.size(); j++) {
-                    results.add(preResults.get(j));
-                }
-
-                // add '1'
-                int temp = 1 << i;
-                for (int j = preResults.size() - 1; j >= 0; j--) {
-                    results.add(preResults.get(j) + temp);
-                }
-                preResults = results;
-                results = new ArrayList<Integer>();
-                i++;
-            }
-
-            results = preResults;
+            generateGaryCode(n, results);
         }
 
         return results;
+    }
+
+    private void generateGaryCode(int n, List<Integer> results) {
+        if (n == 1) {
+            results.add(0);
+            results.add(1);
+            return;
+        }
+
+        generateGaryCode(n - 1, results);
+        int t = 1 << n - 1;
+        int size = results.size();
+
+        for (int i = size - 1; i >= 0; i--) {
+            results.add(results.get(i) + t);
+        }
     }
 }
