@@ -9,29 +9,25 @@ public class Solution {
     public int findMin(int[] num) {
         int min = 0;
         if (num != null && num.length > 0) {
-            int l = 0, h = num.length - 1, mid = (l + h) / 2;
-            while (l < h) {
-                if (num[mid] < num[l] && num[l] > num[h]) {
-                    h = mid;
+            int l = 0, h = num.length - 1;
+            min = num[0];
+            while (l < h - 1) {
+                int mid = (l + h) / 2;
+                if (num[l] < num[mid]) {
+                    min = Math.min(min, num[l]);
+                    l = mid + 1;
                 }
-                else if (num[mid] < num[l] && num[l] < num[h]) {
-                    l = mid;
+                else if (num[l] > num[mid]) {
+                    min = Math.min(min, num[mid]);
+                    h = mid - 1;
                 }
-                else if (num[mid] > num[l] && num[l] > num[h]) {
-                    l = mid;
+                else {
+                    l++;
                 }
-                else if (num[mid] > num[l] && num[l] < num[h]) {
-                    h = mid;
-                }
-                else if (num[mid] == num[l] && num[l] > num[h]) {
-                    l = h;
-                }
-                else if (num[mid] == num[l] && num[l] < num[h]) {
-                    h = l;
-                }
-                mid = (l + h) / 2;
             }
-            min = num[l];
+
+            min = Math.min(min, num[l]);
+            min = Math.min(min, num[h]);
         }
 
         return min;
