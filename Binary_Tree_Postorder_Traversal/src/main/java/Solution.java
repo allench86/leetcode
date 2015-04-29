@@ -1,37 +1,33 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.Stack;
 
 public class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<Integer>();
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        Set<TreeNode> visitedNodes = new HashSet<TreeNode>();
-        TreeNode currentNode = null;
-        stack.push(root);
+        if (root != null) {
+            postOrder(result, root);
+        }
+        return result;
+    }
 
-        while (!stack.isEmpty()) {
-            currentNode = stack.pop();
-            if (currentNode == null) {
-                break;
-            }
-            if ((currentNode.left == null && currentNode.right == null) || visitedNodes.contains(currentNode)) {
-                result.add(currentNode.val);
-            }
-            else {
-                stack.push(currentNode);
-                if (currentNode.right != null) {
-                    stack.push(currentNode.right);
-                }
-                if (currentNode.left != null) {
-                    stack.push(currentNode.left);
-                }
-                visitedNodes.add(currentNode);
-            }
+    private void postOrder(List<Integer> result, TreeNode root) {
+        if (root == null) {
+            return;
         }
 
-        return result;
+        if (root.left == null && root.right == null) {
+            result.add(root.val);
+            return;
+        }
+
+        if (root.left != null) {
+            postOrder(result, root.left);
+        }
+
+        if (root.right != null) {
+            postOrder(result, root.right);
+        }
+
+        result.add(root.val);
     }
 }
