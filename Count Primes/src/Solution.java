@@ -1,34 +1,33 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
         Solution s = new Solution();
 
-        System.out.println(s.countPrimes(100));
+        System.out.println(s.countPrimes(3));
     }
 
     public int countPrimes(int n) {
         if (n <= 2) {
-            return 1;
+            return 0;
         }
 
-        List<Integer> primes = new ArrayList<Integer>();
-        primes.add(2);
-        for (int i = 3; i <= n; i++) {
-            boolean isPrimes = true;
-            int j = 0;
-            while (j < primes.size()) {
-                if (i % primes.get(j) == 0) {
-                    isPrimes = false;
-                    break;
+        boolean[] flags = new boolean[n + 1];
+        Arrays.fill(flags, true);
+        int count = n - 2;
+
+        double root = Math.sqrt(n);
+        for (int i = 2; i < root; i++) {
+            if (flags[i]) {
+                for (int j = i * i; j < n; j = j + i) {
+                    if (flags[j]) {
+                        flags[j] = false;
+                        count--;
+                    }
                 }
-                j++;
-            }
-            if (isPrimes) {
-                primes.add(i);
             }
         }
-        return primes.size();
+
+        return count;
     }
 }
