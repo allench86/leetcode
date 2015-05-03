@@ -1,25 +1,37 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 public class Solution {
     public boolean isValidBST(TreeNode root) {
-        return valid(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
-    }
-
-    private boolean valid(TreeNode root, int min, int max) {
         if (root == null) {
             return true;
         }
 
-        if (root.left != null && root.left.val >= root.val) {
-            return false;
-        }
-        if (root.right != null && root.right.val <= root.val) {
-            return false;
-        }
+        List<Integer> results = new ArrayList<Integer>();
 
-        if (root.val <= min || root.val >= max) {
-            return false;
-        }
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        TreeNode currentNode = root;
 
-        return valid(root.left, min, root.val) && valid(root.right, root.val, max);
+        while (!s.isEmpty() || currentNode != null) {
+            if (currentNode != null) {
+                s.push(currentNode);
+                currentNode = currentNode.left;
+            }
+            else {
+                TreeNode t = s.pop();
+                results.add(t.val);
+                currentNode = t.right;
+            }
+        }
+        boolean result = true;
+        for (int i = 1; i < results.size(); i++) {
+            if (results.get(i) <= results.get(i - 1)) {
+                return false;
+            }
+        }
+        return result;
+
     }
 
     public class TreeNode {
