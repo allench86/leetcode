@@ -1,7 +1,7 @@
 public class Solution {
     public static void main(String[] args) {
         Solution s = new Solution();
-        String t = "aba";
+        String t = "a";
         System.out.println(s.longestPalindrome(t));
     }
 
@@ -10,40 +10,30 @@ public class Solution {
             return s;
         }
 
-        boolean[][] flags = new boolean[s.length()][s.length()];
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = 0; j < s.length(); j++) {
-                flags[i][j] = false;
+        String longest = s.substring(0, 1);
+
+        for (int i = 0; i < s.length() - 1; i++) {
+            String tmp = findPalindrome(s, i, i);
+            if (tmp.length() > longest.length()) {
+                longest = tmp;
+            }
+
+            tmp = findPalindrome(s, i, i + 1);
+            if (tmp.length() > longest.length()) {
+                longest = tmp;
             }
         }
 
-        int longestPalindromeStart = 0;
-        int longestPalindromeEnd = 0;
+        return longest;
+    }
 
-        for (int i = 0; i < s.length(); i++) {
-            flags[i][i] = true;
+    private String findPalindrome(String s, int centerIndex1, int centerIndex2) {
+        while (centerIndex1 >= 0 && centerIndex2 < s.length() && s.charAt(centerIndex1) == s.charAt(centerIndex2)) {
+            centerIndex1--;
+            centerIndex2++;
         }
 
-        for (int i = 1; i < s.length(); i++) {
-            if (s.charAt(i) == s.charAt(i - 1)) {
-                flags[i][i - 1] = true;
-                longestPalindromeStart = i - 1;
-                longestPalindromeEnd = i;
-            }
-        }
+        return s.substring(centerIndex1 + 1, centerIndex2);
 
-        for (int i = s.length() - 2; i >= 0; i--) {
-            for (int j = i + 1; j < s.length(); j++) {
-                if (flags[i + 1][j - 1] && s.charAt(i) == s.charAt(j)) {
-                    flags[i][j] = true;
-                    if (j - i > longestPalindromeEnd - longestPalindromeStart) {
-                        longestPalindromeStart = i;
-                        longestPalindromeEnd = j;
-                    }
-                }
-            }
-        }
-
-        return s.substring(longestPalindromeStart, longestPalindromeEnd + 1);
     }
 }
