@@ -9,34 +9,41 @@ public class Solution {
         if (s == null || s.isEmpty()) {
             return s;
         }
-        StringBuilder longestPalindrome = new StringBuilder();
-        findLongestPalindrome(s, 0, longestPalindrome);
-        return longestPalindrome.toString();
-    }
 
-    private void findLongestPalindrome(String s, int start, StringBuilder longestPalindrome) {
-        if (start < s.length()) {
-            for (int i = start; i < s.length(); i++) {
-                if (isPalindrome(s, start, i)) {
-                    if (longestPalindrome.length() < i - start + 1) {
-                        longestPalindrome.delete(0, longestPalindrome.length());
-                        longestPalindrome.append(s.substring(start, i + 1));
+        boolean[][] flags = new boolean[s.length()][s.length()];
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = 0; j < s.length(); j++) {
+                flags[i][j] = false;
+            }
+        }
+
+        int longestPalindromeStart = 0;
+        int longestPalindromeEnd = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            flags[i][i] = true;
+        }
+
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == s.charAt(i - 1)) {
+                flags[i][i - 1] = true;
+                longestPalindromeStart = i - 1;
+                longestPalindromeEnd = i;
+            }
+        }
+
+        for (int i = s.length() - 2; i >= 0; i--) {
+            for (int j = i + 1; j < s.length(); j++) {
+                if (flags[i + 1][j - 1] && s.charAt(i) == s.charAt(j)) {
+                    flags[i][j] = true;
+                    if (j - i > longestPalindromeEnd - longestPalindromeStart) {
+                        longestPalindromeStart = i;
+                        longestPalindromeEnd = j;
                     }
-                    findLongestPalindrome(s, i + 1, longestPalindrome);
                 }
             }
         }
-    }
 
-    private boolean isPalindrome(String s, int start, int end) {
-        while (start < end) {
-            if (s.charAt(start) != s.charAt(end)) {
-                return false;
-            }
-            start++;
-            end--;
-        }
-        return true;
+        return s.substring(longestPalindromeStart, longestPalindromeEnd + 1);
     }
-
 }
